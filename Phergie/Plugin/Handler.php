@@ -76,6 +76,14 @@ class Phergie_Plugin_Handler implements IteratorAggregate, Countable
      */
     protected $iteratorClass = 'Phergie_Plugin_Iterator';
 
+
+    /**
+     * The cached copy of the plugin iterator
+     *
+     * @var FilterIterator
+     */
+    protected $iterator = null;
+
     /**
      * Constructor to initialize class properties and add the path for core
      * plugins.
@@ -431,9 +439,13 @@ class Phergie_Plugin_Handler implements IteratorAggregate, Countable
      */
     public function getIterator()
     {
-        return new $this->iteratorClass(
-            new ArrayIterator($this->plugins)
-        );
+        if (is_null($this->iterator)) {
+            $this->iterator = new $this->iteratorClass(
+                new ArrayIterator($this->plugins)
+            );
+        }
+
+        return $this->iterator;
     }
 
     /**
