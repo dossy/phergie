@@ -94,4 +94,10 @@ class Phergie_Plugin_MessageTest extends Phergie_Plugin_TestCase
         $this->initializeMessageEvent('alias, hello');
         $this->assertTrue($this->plugin->isTargetedMessage());
     }
+
+    public function testIsTargetedMessageWithoutAliases()
+    {
+        $this->initializeMessageEvent($this->connection->getNick() . ', hello');
+        $this->assertTrue($this->plugin->isTargetedMessage());
+    }
 }
