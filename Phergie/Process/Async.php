@@ -47,13 +47,6 @@ class Phergie_Process_Async extends Phergie_Process_Abstract
     protected $usec = 200000;
 
     /**
-     * Length of time to wait between ticks.
-     *
-     * @var int
-     */
-    protected $wait = 0;
-
-    /**
      * Overrides the parent class to set the poll time.
      *
      * @param Phergie_Bot $bot     Main bot class
@@ -73,7 +66,7 @@ class Phergie_Process_Async extends Phergie_Process_Abstract
             if (isset($options[$var])) {
                 if (!is_int($options[$var])) {
                      throw new Phergie_Process_Exception(
-                        'Processor option "' . $var . '" must be an integer'
+                         'Processor option "' . $var . '" must be an integer'
                      );
                 }
                 $this->$var = $options[$var];
@@ -115,13 +108,13 @@ class Phergie_Process_Async extends Phergie_Process_Abstract
             /**
              * If we have data waiting on this connection, handle it.
              */
-            if (in_array((string) $connection->getHostmask(), $hostmasks)) {
-                if ($event = $this->driver->getEvent()) {
-                    $this->ui->onEvent($event, $connection);
-                    $this->plugins->setEvent($event);
-                    $this->plugins->preEvent();
-                    $this->plugins->{'on' . ucfirst($event->getType())}();
-                }
+            if (in_array((string) $connection->getHostmask(), $hostmasks)
+                && $event = $this->driver->getEvent()
+            ) {
+                $this->ui->onEvent($event, $connection);
+                $this->plugins->setEvent($event);
+                $this->plugins->preEvent();
+                $this->plugins->{'on' . ucfirst($event->getType())}();
             }
 
             /**

@@ -55,9 +55,9 @@ class Phergie_Connection
 
     /**
      * Encoding method for the connection, defaults to ISO-8859-1 but can
-     * be set to UTF8 if necessary
+     * be set to UTF-8 if necessary
      *
-     * @var strng
+     * @var string
      */
     protected $encoding;
 
@@ -109,7 +109,7 @@ class Phergie_Connection
         $this->transport = 'tcp';
         $this->encoding = 'ISO-8859-1';
         // @note this may need changed to something different, for broader support.
-        // @note also may need to make use of 
+        // @note also may need to make use of
         //       http://us.php.net/manual/en/function.stream-encoding.php
 
         $this->setOptions($options);
@@ -244,7 +244,7 @@ class Phergie_Connection
     /**
      * Sets the encoding for the connection to use.
      *
-     * @param string $encoding Encoding to use (ex: ASCII, ISO-8859-1, UTF8, etc.)
+     * @param string $encoding Encoding to use (ex: ASCII, ISO-8859-1, UTF-8, etc.)
      *
      * @return Phergie_Connection Provides a fluent interface
      */
@@ -254,7 +254,7 @@ class Phergie_Connection
 
         $mbStringIsLoaded = extension_loaded('mbstring');
         $encodingIsValid  = in_array($this->encoding, mb_list_encodings());
-        
+
         if (!$mbStringIsLoaded xor !$encodingIsValid) {
             throw new Phergie_Connection_Exception(
                 'Encoding ' . $this->encoding . ' is not supported',
@@ -268,7 +268,7 @@ class Phergie_Connection
     /**
      * Returns the encoding in use by the connection.
      *
-     * @return string Encoding (ex: ASCII, ISO-8859-1, UTF8, etc.)
+     * @return string Encoding (ex: ASCII, ISO-8859-1, UTF-8, etc.)
      */
     public function getEncoding()
     {
