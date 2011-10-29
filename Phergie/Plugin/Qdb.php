@@ -59,8 +59,10 @@ class Phergie_Plugin_Qdb extends Phergie_Plugin_Abstract
      */
     public function onCommandQdb($id)
     {
-        $data = file_get_contents('http://qdb.us/' . $id);
-        if (preg_match('/<span class=qt id=qt(\S+)>(.*?)<\/span>/si', $data, $matches)) {
+        $data = @file_get_contents('http://qdb.us/' . $id);
+        if ($data === false) {
+            $this->doPrivmsg($this->getEvent()->getSource(), 'qdb.us/' . $id . ': not found');
+        } elseif (preg_match('/<span class=qt id=qt(\S+)>(.*?)<\/span>/si', $data, $matches)) {
             $id = $matches[1];
             $quote = html_entity_decode($matches[2]);
             $quote = implode(' / ', array_map('trim', explode('<br />', $quote)));
